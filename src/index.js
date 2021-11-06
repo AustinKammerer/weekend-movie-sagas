@@ -36,7 +36,7 @@ function* fetchDetails(action) {
     const details = yield axios.get(`/api/movie/${id}`);
     console.log("movie details:", details.data);
     // save the details in the redux store
-    yield put({ type: "SET_DETAILS", payload: details.data });
+    yield put({ type: "SET_DETAILS", payload: details.data[0] });
   } catch (error) {
     console.log("get movie's genres error:", error);
   }
