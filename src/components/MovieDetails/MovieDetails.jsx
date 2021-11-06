@@ -22,14 +22,14 @@ export default function MovieDetails() {
       <button onClick={() => history.push("/")}>Movie List</button>
       <div>
         {/* <p>{JSON.stringify(details)}</p> */}
-        <h3>{details.title}</h3>
+        <h2>{details.title}</h2>
         <img src={details.poster} alt={details.title} />
-        <h4>Genres:</h4>
+        <h3>Genres:</h3>
 
         {details.genres
           ? details.genres.map((genre, i) => <p key={i}>{genre}</p>)
           : null}
-        <h4>Description:</h4>
+        <h3>Description:</h3>
         <p>{details.description}</p>
       </div>
     </main>

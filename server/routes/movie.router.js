@@ -25,7 +25,8 @@ router.get("/:id", (req, res) => {
   // use JSON_AGG to return an array of genres instead of multiple rows
   // movie title, poster, and description are also being returned
   const query = `
-    SELECT "movies"."title", "movies"."poster", "movies"."description", JSON_AGG("genres"."name") AS "genres" FROM "movies" JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
+    SELECT "movies"."title", "movies"."poster", "movies"."description", JSON_AGG("genres"."name") AS "genres" FROM "movies"
+    JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
     JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
     WHERE "movies"."id" = $1
     GROUP BY "movies"."title", "movies"."poster", "movies"."description";`;

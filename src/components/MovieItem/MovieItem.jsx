@@ -1,9 +1,7 @@
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 export default function MovieItem({ movie }) {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleClick = () => {
     // dispatch({ type: "SET_DETAILS", payload: movie });

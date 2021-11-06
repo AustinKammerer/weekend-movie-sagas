@@ -16,6 +16,7 @@ function* rootSaga() {
   yield takeEvery("FETCH_MOVIES", fetchAllMovies);
   yield takeEvery("FETCH_DETAILS", fetchDetails);
   yield takeEvery("FETCH_GENRES", fetchGenres);
+  yield takeEvery("ADD_MOVIE", addMovie);
 }
 
 function* fetchAllMovies() {
@@ -44,7 +45,6 @@ function* fetchGenres() {
 // fetch the details of a specific movie from the database (joins tables)
 function* fetchDetails(action) {
   const id = action.payload;
-  console.log("sending:", id);
   try {
     const details = yield axios.get(`/api/movie/${id}`);
     console.log("movie details:", details.data);
@@ -52,6 +52,18 @@ function* fetchDetails(action) {
     yield put({ type: "SET_DETAILS", payload: details.data[0] });
   } catch (error) {
     console.log("get movie's genres error:", error);
+  }
+}
+
+// add a new movie to the database
+function* addMovie(action) {
+  const newMovie = action.payload;
+  console.log("movie to post:", newMovie);
+  try {
+    // POST request
+    yield axios.post(`/api/movie`, newMovie);
+  } catch (error) {
+    console.log("post movie error:", error);
   }
 }
 

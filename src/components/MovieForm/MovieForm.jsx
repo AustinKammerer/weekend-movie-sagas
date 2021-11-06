@@ -1,8 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function MovieForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   // save the genres in the store on page load for the dropdown
   useEffect(() => {
     dispatch({ type: "FETCH_GENRES" });
@@ -15,7 +18,7 @@ export default function MovieForm() {
     title: "",
     poster: "",
     description: "",
-    genre: "",
+    genre_id: "",
   });
 
   const handleChange = (e) => {
@@ -25,24 +28,30 @@ export default function MovieForm() {
     console.log(value);
     // change the newMovie state according to which input is being changed
     // if the current property being set is genre, put the value in an array
-    setNewMovie({ ...newMovie, [name]: name === "genre" ? [value] : value });
+    // setNewMovie({ ...newMovie, [name]: name === "genre" ? [value] : value });
+    setNewMovie({ ...newMovie, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(newMovie);
+    // send the local state object to saga
+    dispatch({ type: "ADD_MOVIE", payload: newMovie });
   };
 
   return (
     <main>
+      <h2>Add a Movie</h2>
+      <button onClick={() => history.push("/")}>Movie List</button>
+      <br />
       <form onChange={handleChange} onSubmit={handleSubmit}>
         <input name="title" type="text" placeholder="Title" />
         <input name="poster" type="text" placeholder="Poster URL" />
         <input name="description" type="text" placeholder="Description" />
-        <select name="genre">
+        <select name="genre_id">
           <option>--Select a Genre--</option>
           {genres.map((genre, i) => (
-            <option key={i} value={genre.name}>
+            <option key={i} value={genre.id}>
               {genre.name}
             </option>
           ))}
