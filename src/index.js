@@ -14,7 +14,7 @@ import axios from "axios";
 // Create the rootSaga generator function
 function* rootSaga() {
   yield takeEvery("FETCH_MOVIES", fetchAllMovies);
-  yield takeEvery("FETCH_DETAILS", fetchMovieDetails);
+  yield takeEvery("FETCH_MOVIES_GENRES", fetchMoviesGenres);
 }
 
 function* fetchAllMovies() {
@@ -28,16 +28,16 @@ function* fetchAllMovies() {
   }
 }
 
-function* fetchMovieDetails(action) {
+function* fetchMoviesGenres(action) {
   const { id } = action.payload;
   // get genre details of a specific movie from the database
   try {
-    const details = yield axios.get(`/api/movie/${id}`);
-    console.log("movie details:", details.data);
+    const moviesGenres = yield axios.get(`/api/movie/${id}`);
+    console.log("movie details:", moviesGenres.data);
     // save the details in the redux store
-    yield put({ type: "SET_DETAILS", payload: details.data });
+    yield put({ type: "SET_MOVIES_GENRES", payload: moviesGenres.data });
   } catch (error) {
-    console.log("get movie details error:", error);
+    console.log("get movie's genres error:", error);
   }
 }
 
@@ -54,7 +54,7 @@ const movies = (state = [], action) => {
   }
 };
 
-// Used to store the movie genres
+// Used to store the movie genres - list of all genres
 const genres = (state = [], action) => {
   switch (action.type) {
     case "SET_GENRES":
@@ -65,10 +65,12 @@ const genres = (state = [], action) => {
 };
 
 // Used to store movie details for the /details view
-const details = (state = [], action) => {
+const details = (state = {}, action) => {
   switch (action.type) {
     case "SET_DETAILS":
       return action.payload;
+    case "SET_MOVIES_GENRES":
+      return { ...state, genres: action.payload };
     default:
       return state;
   }

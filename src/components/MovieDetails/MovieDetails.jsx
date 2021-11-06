@@ -8,10 +8,10 @@ export default function MovieDetails() {
   // on page load, fetch the movie details and save in the store
   // combined with the url params, this lets the details survive a page refresh
   useEffect(() => {
-    dispatch({ type: "FETCH_DETAILS", payload: id });
+    dispatch({ type: "FETCH_MOVIES_GENRES", payload: id });
   }, []);
   // get the movie details from the store
   const details = useSelector((store) => store.details);
 
-  return <p>{id}</p>;
+  return <p>{JSON.stringify(details)}</p>;
 }
