@@ -20,13 +20,15 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   // get the movie id from the path param
   const { id } = req.params;
+  console.log("id is:", id);
   // access the movie's genres by joining movies and genres tables via movies_genres
   // use JSON_AGG to return an array of genres instead of multiple rows
-  const query = `SELECT "movies"."title", JSON_AGG("genres"."name") AS "genres" FROM "movies_genres"
-JOIN "movies" ON "movies_genres"."movie_id" = "movies"."id"
-JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
-WHERE "movies"."id" = $1
-GROUP BY "movies"."title";`;
+  // movie title, poster, and description are also being returned
+  const query = `
+    SELECT "movies"."title", "movies"."poster", "movies"."description", JSON_AGG("genres"."name") AS "genres" FROM "movies" JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
+    JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
+    WHERE "movies"."id" = $1
+    GROUP BY "movies"."title", "movies"."poster", "movies"."description";`;
   pool
     .query(query, [id])
     .then((result) => {
@@ -42,9 +44,9 @@ router.post("/", (req, res) => {
   console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie
   const insertMovieQuery = `
-  INSERT INTO "movies" ("title", "poster", "description")
-  VALUES ($1, $2, $3)
-  RETURNING "id";`;
+    INSERT INTO "movies" ("title", "poster", "description")
+    VALUES ($1, $2, $3)
+    RETURNING "id";`;
 
   // FIRST QUERY MAKES MOVIE
   pool
@@ -60,8 +62,8 @@ router.post("/", (req, res) => {
 
       // Now handle the genre reference
       const insertMovieGenreQuery = `
-      INSERT INTO "movies_genres" ("movie_id", "genre_id")
-      VALUES  ($1, $2);
+        INSERT INTO "movies_genres" ("movie_id", "genre_id")
+        VALUES  ($1, $2);
       `;
       // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
       pool
