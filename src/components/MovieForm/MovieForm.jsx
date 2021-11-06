@@ -19,7 +19,9 @@ export default function MovieForm() {
         <select name={genres}>
           <option>--Select a Genre--</option>
           {genres.map((genre, i) => (
-            <option key={i} value={genre}></option>
+            <option key={i} value={genre.name}>
+              {genre.name}
+            </option>
           ))}
         </select>
       </form>
