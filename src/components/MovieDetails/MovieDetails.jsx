@@ -18,7 +18,7 @@ export default function MovieDetails() {
   const details = useSelector((store) => store.details);
 
   return (
-    <>
+    <main>
       <button onClick={() => history.push("/")}>Movie List</button>
       <div>
         {/* <p>{JSON.stringify(details)}</p> */}
@@ -32,6 +32,6 @@ export default function MovieDetails() {
         <h4>Description:</h4>
         <p>{details.description}</p>
       </div>
-    </>
+    </main>
   );
 }
