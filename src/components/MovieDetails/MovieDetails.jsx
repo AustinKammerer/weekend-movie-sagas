@@ -23,6 +23,8 @@ export default function MovieDetails() {
   // get the movie details from the store
   const details = useSelector((store) => store.details);
 
+  const handleEdit = () => history.push(`/edit/${id}`);
+
   return (
     <Grid container flexDirection="column" rowSpacing={2}>
       <Grid item>
@@ -41,12 +43,16 @@ export default function MovieDetails() {
             border: "1px solid rgb(70,70,70)",
           }}
         >
-          <Grid container item rowSpacing={2}>
-            <Grid item xs={12}>
+          <Grid container item rowSpacing={2} justifyContent="flex-end">
+            <Grid item mt={-2} mr={-2}>
+              <Button onClick={handleEdit}>Edit</Button>
+            </Grid>
+            <Grid item mt={-2} xs={12}>
               <Typography variant="h4" component="h2" px={6}>
                 {details.title}
               </Typography>
             </Grid>
+
             <Grid item xs={12}>
               <img src={details.poster} alt={details.title} />
             </Grid>

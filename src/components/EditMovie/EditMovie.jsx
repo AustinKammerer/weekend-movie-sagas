@@ -47,6 +47,9 @@ export default function EditMovie() {
     // send the local state object to saga
     dispatch({ type: "UPDATE_MOVIE", payload: { updatedMovie, history } });
   };
+
+  const handleCancel = () => history.push(`/details/${id}`);
+
   console.log(updatedMovie);
   return (
     <Grid container flexDirection="column" rowSpacing={2}>
@@ -75,15 +78,17 @@ export default function EditMovie() {
             onSubmit={handleSubmit}
             justifyContent="flex-end"
           >
-            <Grid item xs={12}>
-              <TextField
-                required
-                variant="outlined"
-                name="title"
-                label="Title"
-                value={updatedMovie.title}
-                onChange={handleChange}
-              />
+            <Grid item xs={12} mt={4}>
+              <FormControl fullWidth>
+                <TextField
+                  required
+                  variant="outlined"
+                  name="title"
+                  label="Title"
+                  value={updatedMovie.title}
+                  onChange={handleChange}
+                />
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <img src={details.poster} alt={details.title} />
@@ -137,7 +142,7 @@ export default function EditMovie() {
               </FormControl>
             </Grid>
             <Grid item>
-              <Button type="button" variant="outlined">
+              <Button onClick={handleCancel} type="button" variant="outlined">
                 Cancel
               </Button>
             </Grid>

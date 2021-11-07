@@ -107,7 +107,7 @@ export default function MovieForm() {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={9}>
+            <Grid item xs>
               <FormControl fullWidth>
                 <InputLabel id="dropdown-label">Genre</InputLabel>
                 <Select
@@ -135,13 +135,24 @@ export default function MovieForm() {
               ))}
             </select> */}
             </Grid>
-            <Grid item xs={12} sm={3} alignSelf={"center"}>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              display="flex"
+              alignSelf={"center"}
+              justifyContent="flex-end"
+            >
               <Button
+                onClick={() => history.push("/")}
                 variant="outlined"
-                type="submit"
+                type="button"
                 size="large"
-                sx={{ width: "100%" }}
+                sx={{ mr: 2 }}
               >
+                Cancel
+              </Button>
+              <Button variant="contained" type="submit" size="large">
                 Add
               </Button>
             </Grid>
