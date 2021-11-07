@@ -4,6 +4,11 @@ import { useHistory } from "react-router-dom";
 import "./MovieList.css";
 import MovieItem from "../MovieItem/MovieItem.jsx";
 
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+
 function MovieList() {
   const dispatch = useDispatch();
   const movies = useSelector((store) => store.movies);
@@ -14,15 +19,28 @@ function MovieList() {
   }, []);
 
   return (
-    <main>
-      <h1>Movie List</h1>
-      <button onClick={() => history.push("/new")}>Add Movie</button>
-      <section className="movies">
+    <Grid container rowSpacing={3} justifyContent="center">
+      <Grid item>
+        <Button variant="contained" onClick={() => history.push("/new")}>
+          Add Movie
+        </Button>
+      </Grid>
+
+      <Grid
+        container
+        item
+        mx="auto"
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        justifyContent="center"
+      >
         {movies.map((movie) => (
-          <MovieItem key={movie.id} movie={movie} />
+          <Grid item key={movie.id}>
+            <MovieItem movie={movie} />
+          </Grid>
         ))}
-      </section>
-    </main>
+      </Grid>
+    </Grid>
   );
 }
 
