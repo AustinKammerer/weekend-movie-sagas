@@ -7,8 +7,9 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
-export default function MovieDetails() {
+export default function EditMovie() {
   // get the movie id from the url parameter
   const { id } = useParams();
 
