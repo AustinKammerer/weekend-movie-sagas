@@ -3,6 +3,7 @@ import "./App.css";
 import MovieList from "../MovieList/MovieList.jsx";
 import MovieDetails from "../MovieDetails/MovieDetails.jsx";
 import MovieForm from "../MovieForm/MovieForm.jsx";
+import EditMovie from "../EditMovie/EditMovie.jsx";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -38,6 +39,10 @@ function App() {
           {/* Add Movie page */}
           <Route path={"/new"}>
             <MovieForm />
+          </Route>
+          {/* Edit Movie page */}
+          <Route path={"/edit/:id"}>
+            <EditMovie />
           </Route>
         </Router>
       </Container>
