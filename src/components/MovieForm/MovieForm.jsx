@@ -47,7 +47,7 @@ export default function MovieForm() {
     e.preventDefault();
     console.log(newMovie);
     // send the local state object to saga
-    dispatch({ type: "ADD_MOVIE", payload: newMovie });
+    dispatch({ type: "ADD_MOVIE", payload: { newMovie, history } });
   };
   return (
     <Grid container flexDirection="column" rowSpacing={2}>
