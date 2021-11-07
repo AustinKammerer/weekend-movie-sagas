@@ -61,7 +61,14 @@ export default function MovieForm() {
           component="form"
           onChange={handleChange}
           onSubmit={handleSubmit}
-          sx={{ maxWidth: "max-content", p: 3, mx: "auto" }}
+          sx={{
+            maxWidth: "max-content",
+            p: 3,
+            mx: "auto",
+            backgroundColor: "rgb(24,24,24)",
+            border: "1px solid rgb(70,70,70)",
+          }}
+          elevation={3}
         >
           <Grid container rowSpacing={2} columnSpacing={2}>
             <Grid item xs={12}>
@@ -70,7 +77,6 @@ export default function MovieForm() {
                   required
                   variant="outlined"
                   name="title"
-                  type="text"
                   label="Title"
                 />
               </FormControl>

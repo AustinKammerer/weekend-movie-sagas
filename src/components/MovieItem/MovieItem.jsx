@@ -14,7 +14,7 @@ export default function MovieItem({ movie }) {
     history.push(`/details/${movie.id}`);
   };
   return (
-    <Card sx={{ maxWidth: 185 }}>
+    <Card sx={{ maxWidth: 185 }} square>
       <CardActionArea onClick={handleClick}>
         <CardMedia
           component="img"
@@ -23,11 +23,11 @@ export default function MovieItem({ movie }) {
           alt={movie.title}
           sx={{ height: 275, width: 185 }}
         />
-        <CardContent>
+        {/* <CardContent>
           <Typography gutterBottom variant="subtitle1" component="div">
             {movie.title}
           </Typography>
-        </CardContent>
+        </CardContent> */}
       </CardActionArea>
     </Card>
   );

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 export default function MovieDetails() {
   // get the movie id from the url parameter
@@ -30,7 +31,16 @@ export default function MovieDetails() {
         </Button>
       </Grid>
       <Grid item>
-        <Paper sx={{ maxWidth: 600, p: 3, mx: "auto" }}>
+        <Paper
+          component="div"
+          sx={{
+            maxWidth: 600,
+            p: 3,
+            mx: "auto",
+            backgroundColor: "rgb(24,24,24)",
+            border: "1px solid rgb(70,70,70)",
+          }}
+        >
           <Grid container rowSpacing={2}>
             <Grid item xs={12}>
               <Typography variant="h4" component="h2" px={6}>
@@ -76,7 +86,12 @@ export default function MovieDetails() {
               <Typography variant="h5" component="h3">
                 Description
               </Typography>
-              <Typography textAlign="left" variant="body1">
+              <Typography
+                textAlign="left"
+                variant="body1"
+                overflow="scroll"
+                maxHeight={265}
+              >
                 {details.description}
               </Typography>
             </Grid>
