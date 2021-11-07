@@ -4,11 +4,17 @@ import MovieList from "../MovieList/MovieList.jsx";
 import MovieDetails from "../MovieDetails/MovieDetails.jsx";
 import MovieForm from "../MovieForm/MovieForm.jsx";
 
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+
 function App() {
   return (
-    <div className="App">
-      <h1>The Movies Saga!</h1>
+    <Container maxWidth="xl" sx={{ textAlign: "center" }}>
       <Router>
+        <Typography variant="h2" component="h1" mb={2}>
+          My Movies
+        </Typography>
         <Route path="/" exact>
           <MovieList />
         </Route>
@@ -22,7 +28,7 @@ function App() {
           <MovieForm />
         </Route>
       </Router>
-    </div>
+    </Container>
   );
 }
 
