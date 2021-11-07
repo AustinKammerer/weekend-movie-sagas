@@ -25,11 +25,11 @@ router.get("/:id", (req, res) => {
   // use JSON_AGG to return an array of genres instead of multiple rows
   // movie title, poster, and description are also being returned
   const query = `
-    SELECT "movies"."title", "movies"."poster", "movies"."description", JSON_AGG("genres"."name") AS "genres" FROM "movies"
+    SELECT "movies"."id", "movies"."title", "movies"."poster", "movies"."description", JSON_AGG("genres"."name") AS "genres" FROM "movies"
     JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
     JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
     WHERE "movies"."id" = $1
-    GROUP BY "movies"."title", "movies"."poster", "movies"."description";`;
+    GROUP BY "movies"."id", "movies"."title", "movies"."poster", "movies"."description";`;
   pool
     .query(query, [id])
     .then((result) => {
@@ -80,6 +80,25 @@ router.post("/", (req, res) => {
         });
 
       // Catch for first query
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+// PUT request to update a movie
+router.put("/:id", (req, res) => {
+  console.log(req.body);
+  // get the movie id from the path param
+  const { id } = req.params;
+
+  const updateMovieQuery = `UPDATE "movies" SET "title" = $2, "description" = $3 WHERE "id" = $1;`;
+
+  pool
+    .query(updateMovieQuery, [id, req.body.title, req.body.description])
+    .then((result) => {
+      res.sendStatus(201);
     })
     .catch((err) => {
       console.log(err);

@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 
 export default function EditMovie() {
   // get the movie id from the url parameter
@@ -21,9 +22,32 @@ export default function EditMovie() {
   useEffect(() => {
     dispatch({ type: "FETCH_DETAILS", payload: id });
   }, []);
+
   // get the movie details from the store
   const details = useSelector((store) => store.details);
 
+  // local state to hold user's edit inputs
+  // initialized with the details reducer
+  const [updatedMovie, setUpdatedMovie] = React.useState({ ...details });
+
+  const handleChange = (e) => {
+    // grab the name and value of the input being changed
+    const { name, value } = e.target;
+    console.log(name);
+    console.log(value);
+    // change the updatedMovie state according to which input is being changed
+    // if the current property being set is genre, put the value in an array
+    // setUpdatedMovie({ ...updatedMovie, [name]: name === "genre" ? [value] : value });
+    setUpdatedMovie({ ...updatedMovie, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(updatedMovie);
+    // send the local state object to saga
+    dispatch({ type: "UPDATE_MOVIE", payload: { updatedMovie, history } });
+  };
+  console.log(updatedMovie);
   return (
     <Grid container flexDirection="column" rowSpacing={2}>
       <Grid item>
@@ -42,11 +66,24 @@ export default function EditMovie() {
             border: "1px solid rgb(70,70,70)",
           }}
         >
-          <Grid container item rowSpacing={2}>
+          <Grid
+            container
+            item
+            rowSpacing={2}
+            columnSpacing={2}
+            component="form"
+            onSubmit={handleSubmit}
+            justifyContent="flex-end"
+          >
             <Grid item xs={12}>
-              <Typography variant="h4" component="h2" px={6}>
-                {details.title}
-              </Typography>
+              <TextField
+                required
+                variant="outlined"
+                name="title"
+                label="Title"
+                value={updatedMovie.title}
+                onChange={handleChange}
+              />
             </Grid>
             <Grid item xs={12}>
               <img src={details.poster} alt={details.title} />
@@ -86,14 +123,28 @@ export default function EditMovie() {
               <Typography variant="h5" component="h3">
                 Description
               </Typography>
-              <Typography
-                textAlign="left"
-                variant="body1"
-                overflow="scroll"
-                maxHeight={265}
-              >
-                {details.description}
-              </Typography>
+              <FormControl fullWidth>
+                <TextField
+                  required
+                  value={updatedMovie.description}
+                  onChange={handleChange}
+                  multiline
+                  maxRows={8}
+                  variant="outlined"
+                  name="description"
+                  label="Description"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <Button type="button" variant="outlined">
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button type="submit" variant="contained">
+                Save
+              </Button>
             </Grid>
           </Grid>
         </Paper>
