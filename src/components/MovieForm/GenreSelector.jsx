@@ -8,10 +8,20 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      width: 250,
+    },
+  },
+};
 
 export default function MovieForm() {
   const dispatch = useDispatch();
@@ -29,7 +39,7 @@ export default function MovieForm() {
     title: "",
     poster: "",
     description: "",
-    genre_id: "",
+    genres: [],
   });
 
   const handleChange = (e) => {
@@ -61,60 +71,62 @@ export default function MovieForm() {
         component="form"
         onChange={handleChange}
         onSubmit={handleSubmit}
-        sx={{ maxWidth: "max-content", p: 3, mx: "auto" }}
+        sx={{ maxWidth: "fit-content", p: 3, mx: "auto" }}
       >
-        <Grid container rowSpacing={2} columnSpacing={2}>
+        <Grid container rowSpacing={2}>
           <Grid item xs={12}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                variant="outlined"
-                name="title"
-                type="text"
-                label="Title"
-              />
-            </FormControl>
+            <TextField
+              required
+              variant="outlined"
+              name="title"
+              type="text"
+              label="Title"
+            />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                multiline
-                maxRows={4}
-                variant="outlined"
-                name="poster"
-                type="text"
-                label="Poster URL"
-              />
-            </FormControl>
+          <Grid item xs={6}>
+            <TextField
+              required
+              multiline
+              maxRows={4}
+              variant="outlined"
+              name="poster"
+              type="text"
+              label="Poster URL"
+            />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                multiline
-                maxRows={4}
-                variant="outlined"
-                name="description"
-                type="text"
-                label="Description"
-              />
-            </FormControl>
+          <Grid item xs={6}>
+            <TextField
+              required
+              multiline
+              maxRows={4}
+              variant="outlined"
+              name="description"
+              type="text"
+              label="Description"
+            />
           </Grid>
-          <Grid item xs={12} sm={9}>
-            <FormControl fullWidth>
+          <Grid item xs={12}>
+            <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="dropdown-label">Genre</InputLabel>
               <Select
-                required
                 labelId="dropdown-label"
                 id="dropdown"
-                name="genre_id"
-                value={newMovie.genre_id}
-                label="Genre"
+                multiple
+                name="genres"
+                value={newMovie.genres}
                 onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {selected.map((value, i) => (
+                      <Chip key={i} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
               >
-                {genres.map((genre, i) => (
-                  <MenuItem key={i} value={genre.id}>
+                {genres.map((genre) => (
+                  <MenuItem key={genre.id} value={genre.name}>
                     {genre.name}
                   </MenuItem>
                 ))}
@@ -129,13 +141,8 @@ export default function MovieForm() {
               ))}
             </select> */}
           </Grid>
-          <Grid item xs={12} sm={3} alignSelf={"center"}>
-            <Button
-              variant="outlined"
-              type="submit"
-              size="large"
-              sx={{ width: "100%" }}
-            >
+          <Grid item xs>
+            <Button variant="outlined" type="submit">
               Add
             </Button>
           </Grid>

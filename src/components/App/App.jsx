@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 
 function App() {
   return (
-    <Container maxWidth="xl" sx={{ textAlign: "center" }}>
+    <Container maxWidth="xl" sx={{ textAlign: "center", px: 0 }}>
       <Router>
         <Typography variant="h2" component="h1" mb={2}>
           My Movies
