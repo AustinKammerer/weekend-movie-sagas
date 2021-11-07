@@ -50,77 +50,77 @@ export default function MovieForm() {
     dispatch({ type: "ADD_MOVIE", payload: newMovie });
   };
   return (
-    <Box>
-      <Button variant="contained" onClick={() => history.push("/")}>
-        Movie List
-      </Button>
-      <Typography variant="h4" component="h2">
-        Add a Movie
-      </Typography>
-      <Paper
-        component="form"
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        sx={{ maxWidth: "max-content", p: 3, mx: "auto" }}
-      >
-        <Grid container rowSpacing={2} columnSpacing={2}>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                variant="outlined"
-                name="title"
-                type="text"
-                label="Title"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                multiline
-                maxRows={4}
-                variant="outlined"
-                name="poster"
-                type="text"
-                label="Poster URL"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                multiline
-                maxRows={4}
-                variant="outlined"
-                name="description"
-                type="text"
-                label="Description"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <FormControl fullWidth>
-              <InputLabel id="dropdown-label">Genre</InputLabel>
-              <Select
-                required
-                labelId="dropdown-label"
-                id="dropdown"
-                name="genre_id"
-                value={newMovie.genre_id}
-                label="Genre"
-                onChange={handleChange}
-              >
-                {genres.map((genre, i) => (
-                  <MenuItem key={i} value={genre.id}>
-                    {genre.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            {/* <select name="genre_id">
+    <Grid container flexDirection="column" rowSpacing={2}>
+      <Grid item>
+        <Button variant="contained" onClick={() => history.push("/")}>
+          Movie List
+        </Button>
+      </Grid>
+      <Grid item>
+        <Paper
+          component="form"
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          sx={{ maxWidth: "max-content", p: 3, mx: "auto" }}
+        >
+          <Grid container rowSpacing={2} columnSpacing={2}>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <TextField
+                  required
+                  variant="outlined"
+                  name="title"
+                  type="text"
+                  label="Title"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <TextField
+                  required
+                  multiline
+                  maxRows={4}
+                  variant="outlined"
+                  name="poster"
+                  type="text"
+                  label="Poster URL"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <TextField
+                  required
+                  multiline
+                  maxRows={4}
+                  variant="outlined"
+                  name="description"
+                  type="text"
+                  label="Description"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <FormControl fullWidth>
+                <InputLabel id="dropdown-label">Genre</InputLabel>
+                <Select
+                  required
+                  labelId="dropdown-label"
+                  id="dropdown"
+                  name="genre_id"
+                  value={newMovie.genre_id}
+                  label="Genre"
+                  onChange={handleChange}
+                >
+                  {genres.map((genre, i) => (
+                    <MenuItem key={i} value={genre.id}>
+                      {genre.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {/* <select name="genre_id">
               <option>--Select a Genre--</option>
               {genres.map((genre, i) => (
                 <option key={i} value={genre.id}>
@@ -128,20 +128,22 @@ export default function MovieForm() {
                 </option>
               ))}
             </select> */}
+            </Grid>
+            <Grid item xs={12} sm={3} alignSelf={"center"}>
+              <Button
+                variant="outlined"
+                type="submit"
+                size="large"
+                sx={{ width: "100%" }}
+              >
+                Add
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={3} alignSelf={"center"}>
-            <Button
-              variant="outlined"
-              type="submit"
-              size="large"
-              sx={{ width: "100%" }}
-            >
-              Add
-            </Button>
-          </Grid>
-        </Grid>
-      </Paper>
+        </Paper>
+      </Grid>
+
       {/* <form onChange={handleChange} onSubmit={handleSubmit}></form> */}
-    </Box>
+    </Grid>
   );
 }
