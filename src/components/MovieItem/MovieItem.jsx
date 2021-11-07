@@ -1,16 +1,14 @@
 import { useHistory } from "react-router-dom";
 
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
 export default function MovieItem({ movie }) {
   const history = useHistory();
 
   const handleClick = () => {
-    // dispatch({ type: "SET_DETAILS", payload: movie });
+    // click a movie to go to its details page and bring id with
     history.push(`/details/${movie.id}`);
   };
   return (
@@ -23,11 +21,6 @@ export default function MovieItem({ movie }) {
           alt={movie.title}
           sx={{ height: 275, width: 185 }}
         />
-        {/* <CardContent>
-          <Typography gutterBottom variant="subtitle1" component="div">
-            {movie.title}
-          </Typography>
-        </CardContent> */}
       </CardActionArea>
     </Card>
   );

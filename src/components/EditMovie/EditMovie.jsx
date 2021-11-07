@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 
@@ -36,9 +35,9 @@ export default function EditMovie() {
     console.log(name);
     console.log(value);
     // change the updatedMovie state according to which input is being changed
+    setUpdatedMovie({ ...updatedMovie, [name]: value });
     // if the current property being set is genre, put the value in an array
     // setUpdatedMovie({ ...updatedMovie, [name]: name === "genre" ? [value] : value });
-    setUpdatedMovie({ ...updatedMovie, [name]: value });
   };
 
   const handleSubmit = (e) => {

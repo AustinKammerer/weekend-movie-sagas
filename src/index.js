@@ -64,6 +64,7 @@ function* addMovie(action) {
     // POST request
     yield axios.post(`/api/movie`, newMovie);
     console.log("post success");
+    // navigate Home on successful post
     yield history.push(`/`);
   } catch (error) {
     console.log("post movie error:", error);
@@ -78,7 +79,8 @@ function* updateMovie(action) {
     // PUT request
     yield axios.put(`/api/movie/${id}`, updatedMovie);
     console.log("put success");
-    yield history.push(`/`);
+    // navigate back to the details page on successful put
+    yield history.push(`/details/${id}`);
   } catch (error) {
     console.log("put movie error:", error);
   }

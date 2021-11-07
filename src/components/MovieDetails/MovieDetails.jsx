@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 
 export default function MovieDetails() {
   // get the movie id from the url parameter
@@ -23,6 +22,7 @@ export default function MovieDetails() {
   // get the movie details from the store
   const details = useSelector((store) => store.details);
 
+  // click edit to go to the edit page and bring id with
   const handleEdit = () => history.push(`/edit/${id}`);
 
   return (

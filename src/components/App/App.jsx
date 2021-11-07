@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+// add a dark theme
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -31,7 +32,6 @@ function App() {
           <Route path="/" exact>
             <MovieList />
           </Route>
-
           {/* Details page */}
           <Route path={"/details/:id"}>
             <MovieDetails />

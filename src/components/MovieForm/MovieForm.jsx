@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
@@ -38,9 +36,9 @@ export default function MovieForm() {
     console.log(name);
     console.log(value);
     // change the newMovie state according to which input is being changed
+    setNewMovie({ ...newMovie, [name]: value });
     // if the current property being set is genre, put the value in an array
     // setNewMovie({ ...newMovie, [name]: name === "genre" ? [value] : value });
-    setNewMovie({ ...newMovie, [name]: value });
   };
 
   const handleSubmit = (e) => {
