@@ -27,7 +27,7 @@ export default function MovieForm() {
     title: "",
     poster: "",
     description: "",
-    genre_id: "",
+    genres: "",
   });
 
   const handleChange = (e) => {
@@ -112,8 +112,8 @@ export default function MovieForm() {
                   required
                   labelId="dropdown-label"
                   id="dropdown"
-                  name="genre_id"
-                  value={newMovie.genre_id}
+                  name="genres"
+                  value={newMovie.genres}
                   label="Genre"
                   onChange={handleChange}
                 >

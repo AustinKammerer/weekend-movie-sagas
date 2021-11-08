@@ -61,14 +61,39 @@ router.post("/", (req, res) => {
 
       const createdMovieId = result.rows[0].id;
 
-      // Now handle the genre reference
-      const insertMovieGenreQuery = `
-        INSERT INTO "movies_genres" ("movie_id", "genre_id")
-        VALUES  ($1, $2);
-      `;
+      // for adding multiple genres to a movie (insert multiple rows into movies_genres)
+      // we will add on to this
+      let insertMovieGenreQuery = `
+      INSERT INTO "movies_genres" ("movie_id", "genre_id")
+      VALUES`;
+
+      // array to hold variable number of genre_id values from the client (sanitation)
+      const genreIdValues = [];
+
+      // build the query string
+      for (let i = 0; i < req.body.genres.length; i++) {
+        // start at $2 since $1 will be used for createdMovieId
+        insertMovieGenreQuery += ` ($1, $${i + 2})`;
+        // add a comma or semi-colon depending on if we are at the last interation or not
+        if (i === req.body.genres.length - 1) {
+          // if last iteration, add semicolon
+          insertMovieGenreQuery += `;`;
+        } else {
+          // otherwise, add comma
+          insertMovieGenreQuery += `,`;
+        }
+        // push the corresponding genre_id value from the client into the sanitation array
+        genreIdValues.push(req.body.genres[i]);
+      }
+
+      // // Now handle the genre reference
+      // const insertMovieGenreQuery = `
+      //   INSERT INTO "movies_genres" ("movie_id", "genre_id")
+      //   VALUES  ($1, $2);
+      // `;
       // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
       pool
-        .query(insertMovieGenreQuery, [createdMovieId, req.body.genre_id])
+        .query(insertMovieGenreQuery, [createdMovieId, ...genreIdValues])
         .then((result) => {
           //Now that both are done, send back success!
           res.sendStatus(201);
