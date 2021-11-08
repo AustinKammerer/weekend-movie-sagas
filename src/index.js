@@ -123,12 +123,21 @@ const details = (state = {}, action) => {
   }
 };
 
+// PATH REDUCER - keep track of the current pathname
+const path = (state = "/", action) => {
+  if (action.type === "CHANGE_PAGE") {
+    return action.payload;
+  }
+  return state;
+};
+
 // Create one store that all components can use
 const storeInstance = createStore(
   combineReducers({
     movies,
     genres,
     details,
+    path,
   }),
   // Add sagaMiddleware to our store
   applyMiddleware(sagaMiddleware, logger)

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./MovieList.css";
 import MovieItem from "../MovieItem/MovieItem.jsx";
 
@@ -13,9 +13,12 @@ function MovieList() {
   const dispatch = useDispatch();
   const movies = useSelector((store) => store.movies);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch({ type: "FETCH_MOVIES" });
+    // send the current location to the store
+    dispatch({ type: "CHANGE_PAGE", payload: location.pathname });
   }, []);
 
   return (

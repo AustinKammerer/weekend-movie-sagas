@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -13,11 +13,14 @@ export default function MovieDetails() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   // on page load, fetch the movie genres and save in the store
   // combined with the url params, this lets the details survive a page refresh
   useEffect(() => {
     dispatch({ type: "FETCH_DETAILS", payload: id });
+    // send the current location to the store
+    dispatch({ type: "CHANGE_PAGE", payload: location.pathname });
   }, []);
   // get the movie details from the store
   const details = useSelector((store) => store.details);
