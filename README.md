@@ -6,16 +6,16 @@ Movie Collection Manager
 
 _Duration: Weekend_
 
-This is a full stack application for managing a movie collection. The main page is a view of movie posters in the collection. There is a details page for each movie which displays the movie's title, poster, genres, and description. Title and descriptions may be edited. Users may also add new movies to the collection on the Add Movie page.
+This is a full stack application for managing a movie collection. The main page is a view of movie posters in the collection. There is a details page for each movie which displays the movie's title, poster, genres, and description. Title, descriptions, and genres may be edited by the user. Users may also add new movies to the collection on the Add Movie page.
 
 The app uses React Redux and Sagas to get data from the database and store the data in state. The Details page uses react-router url params, so the user may refresh the page and not lose the information. One of the challenges in the this project was working with the asynchronus functions and rendering with their returns. For example, if the user refreshes the page while editing a movie, the inputs are no longer populated with the current values.
 
-A junction table is used in the database in order to make many to many relations between the lists of genres and movies. A challenge regarding that has been allowing the user to add more than one genre on the Add Movie page.
+A junction table is used in the database in order to make many to many relations between the lists of genres and movies. This brought about two challenges. First, allowing the user to add more than one genre to a new movie. Second, allowing the user to edit an existing movie's genres. The first problem was solved on the server by looping over the desired genres to build a INSERT query string. The second was solved by first deleting the existing movie/genre realations and then using the same INSERT query method to add the new and/or previous relations back.
 
 TODO
 
 - [x] Allow the user to add more than one genre to a new movie
-- [ ] Allow the user to add or remove a genre on the Edit page
+- [x] Allow the user to add or remove a genre on the Edit page
 - [ ] Implement a search function to search for movies in the collection
 - [ ] Develop an Admin page for adding and removing genres from the database
 - [ ] Deploy to Heroku
@@ -42,7 +42,7 @@ How does someone use this application? Tell a user story here.
 3. Enter the movie's title, a url for the poster image, a description, and a genre.
 4. Click `Add` to save to the database, or `Cancel` to discard and return Home.
 5. Click on a movie's poster to navigate to the Details page for that movie.
-6. Click `Edit` to edit the movie's title and/or description.
+6. Click `Edit` to edit the movie's title, description, and/or genres.
 7. Click `Save` to update the database entry, or `Cancel` to discard and return to Details.
 8. Click `Movie List` at anytime to return Home.
 
