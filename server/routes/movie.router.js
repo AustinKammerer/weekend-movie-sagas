@@ -73,7 +73,8 @@ router.post("/", (req, res) => {
       // build the query string
       for (let i = 0; i < req.body.genres.length; i++) {
         // start at $2 since $1 will be used for createdMovieId
-        insertMovieGenreQuery += ` ($1, $${i + 2})`;
+        insertMovieGenreQuery += `
+         ($1, (SELECT "id" from "genres" WHERE "name" = $${i + 2}))`;
         // add a comma or semi-colon depending on if we are at the last interation or not
         if (i === req.body.genres.length - 1) {
           // if last iteration, add semicolon
