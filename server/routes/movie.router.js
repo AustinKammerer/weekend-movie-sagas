@@ -86,12 +86,6 @@ router.post("/", (req, res) => {
         // push the corresponding genre_id value from the client into the sanitation array
         genreIdValues.push(req.body.genres[i]);
       }
-
-      // // Now handle the genre reference
-      // const insertMovieGenreQuery = `
-      //   INSERT INTO "movies_genres" ("movie_id", "genre_id")
-      //   VALUES  ($1, $2);
-      // `;
       // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
       pool
         .query(insertMovieGenreQuery, [createdMovieId, ...genreIdValues])
@@ -113,6 +107,26 @@ router.post("/", (req, res) => {
     });
 });
 
+// DELETE REQUEST for removing one or more genre relations
+// when the client wants to update a movie's genres, all genre relations for that movie will be removed
+router.delete("/genres/:id", (req, res) => {
+  console.log("in delete", req.body);
+  // get the movie id from the path param
+  const { id } = req.params;
+
+  const deleteMovieGenresQuery = `DELETE FROM "movies_genres" WHERE "movie_id" = $1;`;
+
+  pool
+    .query(deleteMovieGenresQuery, [id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 // PUT request to update a movie
 router.put("/:id", (req, res) => {
   console.log(req.body);
@@ -124,12 +138,51 @@ router.put("/:id", (req, res) => {
   pool
     .query(updateMovieQuery, [id, req.body.title, req.body.description])
     .then((result) => {
-      res.sendStatus(201);
+      // after movies table is updated, update movies_genres if needed
+      if (req.body.genreFlag) {
+        // for adding multiple genres to a movie (insert multiple rows into movies_genres)
+        // we will add on to this
+        let insertMovieGenreQuery = `
+      INSERT INTO "movies_genres" ("movie_id", "genre_id")
+      VALUES`;
+
+        // array to hold variable number of genre_id values from the client (sanitation)
+        const genreIdValues = [];
+
+        // build the query string
+        for (let i = 0; i < req.body.genres.length; i++) {
+          // start at $2 since $1 will be used for id
+          insertMovieGenreQuery += `
+         ($1, (SELECT "id" from "genres" WHERE "name" = $${i + 2}))`;
+          // add a comma or semi-colon depending on if we are at the last interation or not
+          if (i === req.body.genres.length - 1) {
+            // if last iteration, add semicolon
+            insertMovieGenreQuery += `;`;
+          } else {
+            // otherwise, add comma
+            insertMovieGenreQuery += `,`;
+          }
+          // push the corresponding genre_id value from the client into the sanitation array
+          genreIdValues.push(req.body.genres[i]);
+        }
+        // SECOND QUERY ADDS GENRE(S) TO THE EXISTING MOVIE
+        pool
+          .query(insertMovieGenreQuery, [id, ...genreIdValues])
+          .then((result) => {
+            //Now that both are done, send back success!
+            res.sendStatus(201);
+          })
+          .catch((err) => {
+            // catch for second query
+            console.log(err);
+            res.sendStatus(500);
+          });
+      }
     })
     .catch((err) => {
       console.log(err);
       res.sendStatus(500);
-    });
+    }); // first query catch
 });
 
 module.exports = router;

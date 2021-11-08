@@ -8,6 +8,34 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
+
+// sizing and font styles for genre selector dropdown
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(genreName, genres, theme) {
+  return {
+    fontWeight:
+      genres.indexOf(genreName) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 export default function EditMovie() {
   // get the movie id from the url parameter
@@ -15,19 +43,26 @@ export default function EditMovie() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  // set them for dropdown multi selector
+  const theme = useTheme();
 
-  // on page load, fetch the movie genres and save in the store
-  // combined with the url params, this lets the details survive a page refresh
+  // on page load, fetch the movie details and genre list and save in the store
   useEffect(() => {
     dispatch({ type: "FETCH_DETAILS", payload: id });
+    dispatch({ type: "FETCH_GENRES" });
   }, []);
 
-  // get the movie details from the store
+  // get the genre list for selector input rendering
+  const genres = useSelector((store) => store.genres);
+
+  // get the movie details from the store so the inputs have the current values in them
   const details = useSelector((store) => store.details);
 
   // local state to hold user's edit inputs
   // initialized with the details reducer
-  const [updatedMovie, setUpdatedMovie] = React.useState({ ...details });
+  const [updatedMovie, setUpdatedMovie] = React.useState({
+    ...details,
+  });
 
   const handleChange = (e) => {
     // grab the name and value of the input being changed
@@ -35,7 +70,11 @@ export default function EditMovie() {
     console.log(name);
     console.log(value);
     // change the updatedMovie state according to which input is being changed
-    setUpdatedMovie({ ...updatedMovie, [name]: value });
+    setUpdatedMovie({
+      ...updatedMovie,
+      [name]: value,
+      genreFlag: name === "genres" ? true : false,
+    });
     // if the current property being set is genre, put the value in an array
     // setUpdatedMovie({ ...updatedMovie, [name]: name === "genre" ? [value] : value });
   };
@@ -47,9 +86,9 @@ export default function EditMovie() {
     dispatch({ type: "UPDATE_MOVIE", payload: { updatedMovie, history } });
   };
 
+  // return to details view on cancel
   const handleCancel = () => history.push(`/details/${id}`);
 
-  console.log(updatedMovie);
   return (
     <Grid container flexDirection="column" rowSpacing={2}>
       <Grid item>
@@ -77,7 +116,7 @@ export default function EditMovie() {
             onSubmit={handleSubmit}
             justifyContent="flex-end"
           >
-            <Grid item xs={12} mt={4}>
+            <Grid item xs={12}>
               <FormControl fullWidth>
                 <TextField
                   required
@@ -93,7 +132,38 @@ export default function EditMovie() {
               <img src={details.poster} alt={details.title} />
             </Grid>
             <Grid container item>
-              <Grid
+              <FormControl fullWidth>
+                <InputLabel id="dropdown-label">Genre</InputLabel>
+                <Select
+                  labelId="dropdown-label"
+                  multiple
+                  name="genres"
+                  value={updatedMovie.genres}
+                  onChange={handleChange}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value, i) => (
+                        <Chip key={i} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {genres.map((genre) => (
+                    <MenuItem
+                      key={genre.id}
+                      value={genre.name}
+                      style={getStyles(genre.name, updatedMovie.genres, theme)}
+                    >
+                      {genre.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {/* <Grid
                 item
                 xs={12}
                 sm={6}
@@ -120,7 +190,7 @@ export default function EditMovie() {
                       </Grid>
                     ))
                   : null}
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Grid item xs={12}>

@@ -15,21 +15,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function getStyles(name, personName, theme) {
+function getStyles(genreName, genres, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      genres.indexOf(genreName) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -38,7 +27,7 @@ function getStyles(name, personName, theme) {
 export default function MovieForm() {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  // set them for dropdown multi selector
   const theme = useTheme();
 
   // save the genres in the store on page load for the dropdown
@@ -63,8 +52,6 @@ export default function MovieForm() {
     console.log(value);
     // change the newMovie state according to which input is being changed
     setNewMovie({ ...newMovie, [name]: value });
-    // if the current property being set is genre, put the value in an array
-    // setNewMovie({ ...newMovie, [name]: name === "genre" ? [value] : value });
   };
 
   const handleSubmit = (e) => {
@@ -163,32 +150,6 @@ export default function MovieForm() {
                   ))}
                 </Select>
               </FormControl>
-              {/* <FormControl fullWidth>
-                <InputLabel id="dropdown-label">Genre</InputLabel>
-                <Select
-                  required
-                  labelId="dropdown-label"
-                  id="dropdown"
-                  name="genres"
-                  value={newMovie.genres}
-                  label="Genre"
-                  onChange={handleChange}
-                >
-                  {genres.map((genre, i) => (
-                    <MenuItem key={i} value={genre.id}>
-                      {genre.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl> */}
-              {/* <select name="genre_id">
-              <option>--Select a Genre--</option>
-              {genres.map((genre, i) => (
-                <option key={i} value={genre.id}>
-                  {genre.name}
-                </option>
-              ))}
-            </select> */}
             </Grid>
             <Grid
               item
@@ -214,8 +175,6 @@ export default function MovieForm() {
           </Grid>
         </Paper>
       </Grid>
-
-      {/* <form onChange={handleChange} onSubmit={handleSubmit}></form> */}
     </Grid>
   );
 }
