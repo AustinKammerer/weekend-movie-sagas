@@ -14,7 +14,7 @@ A junction table is used in the database in order to make many to many relations
 
 TODO
 
-- [ ] Allow the user to add more than one genre to a new movie
+- [x] Allow the user to add more than one genre to a new movie
 - [ ] Allow the user to add or remove a genre on the Edit page
 - [ ] Implement a search function to search for movies in the collection
 - [ ] Develop an Admin page for adding and removing genres from the database

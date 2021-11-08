@@ -74,8 +74,12 @@ function* addMovie(action) {
 // update a movie entry in the database
 function* updateMovie(action) {
   const { updatedMovie, history } = action.payload;
-  const { id } = updatedMovie;
+  const { id, genreFlag } = updatedMovie;
   try {
+    // if payload is flagged for genre change:
+    if (genreFlag) {
+      yield axios.delete(`/api/movie/genres/${id}`, updatedMovie);
+    }
     // PUT request
     yield axios.put(`/api/movie/${id}`, updatedMovie);
     console.log("put success");
