@@ -18,10 +18,11 @@ CREATE TABLE "genres" (
 -- JUNCTION TABLE
 -- Movies can have multiple genres and each genre can be applied to multiple movies
 -- This is many-to-many!
+-- ON DELETE CASCADE will delete entries in the junction table when something is deleted from movies or genres
 CREATE TABLE "movies_genres" (
   "id" SERIAL PRIMARY KEY,
-  "movie_id" INT REFERENCES "movies" NOT NULL,
-  "genre_id" INT REFERENCES "genres" NOT NULL
+  "movie_id" INT REFERENCES "movies" NOT NULL ON DELETE CASCADE,
+  "genre_id" INT REFERENCES "genres" NOT NULL ON DELETE CASCADE
 );
 
 --------[ DATA! ]---------
