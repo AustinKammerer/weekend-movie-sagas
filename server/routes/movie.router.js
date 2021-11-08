@@ -177,6 +177,8 @@ router.put("/:id", (req, res) => {
             console.log(err);
             res.sendStatus(500);
           });
+      } else {
+        res.sendStatus(201); // send back success if we are not updating genres
       }
     })
     .catch((err) => {
