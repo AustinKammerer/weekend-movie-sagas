@@ -1,9 +1,11 @@
-import { HashRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./App.css";
 import MovieList from "../MovieList/MovieList.jsx";
 import MovieDetails from "../MovieDetails/MovieDetails.jsx";
 import MovieForm from "../MovieForm/MovieForm.jsx";
 import EditMovie from "../EditMovie/EditMovie.jsx";
+import AdminView from "../AdminView/AdminView.jsx";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -18,6 +20,9 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  // grab the current page's path for header conditional rendering
+  const path = useSelector((store) => store.path);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Container
@@ -27,7 +32,7 @@ function App() {
       >
         <Router>
           <Typography variant="h2" component="h1" mb={2} color="white">
-            My Movies
+            {path === "/admin" ? "Welcome, Admin" : "My Movies"}
           </Typography>
           <Route path="/" exact>
             <MovieList />
@@ -43,6 +48,10 @@ function App() {
           {/* Edit Movie page */}
           <Route path={"/edit/:id"}>
             <EditMovie />
+          </Route>
+          {/* Admin page */}
+          <Route path={"/admin"}>
+            <AdminView />
           </Route>
         </Router>
       </Container>
