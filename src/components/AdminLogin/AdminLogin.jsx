@@ -19,6 +19,7 @@ export default function AdminLogin() {
     const [retryOpen, setRetryOpen] = useState(false);
     const [credentials, setCredentials] = useState({ username: "", password: "" })
 
+    // handle open/close of main login dialogue
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -27,6 +28,7 @@ export default function AdminLogin() {
         setOpen(false);
     };
 
+    // handle open/close of failed login message dialogue
     const handleRetryClickOpen = () => {
         setRetryOpen(true);
     };
@@ -36,6 +38,7 @@ export default function AdminLogin() {
         setCredentials({ username: "", password: "" })
     };
 
+    // handle input changes for logging in
     const handleChange = (e) => {
         // grab the name and value of the input being changed
         const { name, value } = e.target;
@@ -45,6 +48,7 @@ export default function AdminLogin() {
         setCredentials({ ...credentials, [name]: value });
     };
 
+    // login button will either move to admin page or open fail dialogue
     const handleLogin = () => {
         if (credentials.username === 'camera' && credentials.password == 'action') {
             history.push('/admin')

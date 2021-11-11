@@ -31,4 +31,19 @@ router.post('/', (req, res) => {
         });
 })
 
+// DELETE query for removing a genre (admin)
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    const query = `DELETE FROM "genres" WHERE "id" = $1;`;
+    pool.query(query, [id])
+        .then((result) => {
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log("ERROR: DELETE genre", err);
+            res.sendStatus(500);
+        });
+})
+
 module.exports = router;

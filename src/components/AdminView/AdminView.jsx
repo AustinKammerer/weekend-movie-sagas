@@ -21,17 +21,20 @@ export default function AdminView() {
         // send the current location to the store
         dispatch({ type: "CHANGE_PAGE", payload: location.pathname });
     }, []);
+
     // get the genre list
     const genres = useSelector((store) => store.genres);
-    const path = useSelector((store) => store.path);
 
     // local state to hold new genre input
     const [newGenre, setNewGenre] = useState("");
+
     // handle input changes
     const handleChange = (e) => {
         console.log(e.target.value);
         setNewGenre(e.target.value);
     };
+
+    // send the new genre to POST saga
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(newGenre);
@@ -39,6 +42,7 @@ export default function AdminView() {
         setNewGenre("");
     };
 
+    // send genre to delete to DELETE saga
     const handleDelete = (genre) => {
         console.log(genre.id);
         dispatch({ type: "DELETE_GENRE", payload: genre })
