@@ -31,17 +31,6 @@ export default function MovieDetails() {
     return (
         <Grid container flexDirection="column" rowSpacing={2}>
             <Grid item>
-                <Button variant="contained" onClick={() => history.push("/")} sx={{ mr: 2 }}>
-                    Movie List
-                </Button>
-                <Button variant="contained" onClick={() => history.push("/new")}>
-                    Add Movie
-                </Button>
-            </Grid>
-            {/* <Grid item> */}
-
-            {/* </Grid> */}
-            <Grid item>
                 <Paper
                     component="div"
                     sx={{

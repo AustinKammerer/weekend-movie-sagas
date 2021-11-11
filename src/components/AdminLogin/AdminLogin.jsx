@@ -58,7 +58,7 @@ export default function AdminLogin() {
     }
     return (
         <>
-            <Button variant="contained" onClick={handleClickOpen}>
+            <Button variant="contained" onClick={handleClickOpen} >
                 Admin Login
             </Button>
             <Dialog open={open} onClose={handleClose}>
