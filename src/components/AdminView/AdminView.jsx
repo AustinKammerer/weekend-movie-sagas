@@ -35,11 +35,13 @@ export default function AdminView() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(newGenre);
+        dispatch({ type: "ADD_GENRE", payload: { genre: newGenre } })
         setNewGenre("");
     };
 
     const handleDelete = (genre) => {
         console.log(genre.id);
+        dispatch({ type: "DELETE_GENRE", payload: genre })
     }
 
     return (
