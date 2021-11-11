@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -43,6 +43,7 @@ export default function EditMovie() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   // set them for dropdown multi selector
   const theme = useTheme();
 
@@ -50,6 +51,8 @@ export default function EditMovie() {
   useEffect(() => {
     dispatch({ type: "FETCH_DETAILS", payload: id });
     dispatch({ type: "FETCH_GENRES" });
+    // send the current location to the store
+    dispatch({ type: "CHANGE_PAGE", payload: location.pathname });
   }, []);
 
   // get the genre list for selector input rendering

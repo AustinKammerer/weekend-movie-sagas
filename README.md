@@ -17,7 +17,7 @@ TODO
 - [x] Allow the user to add more than one genre to a new movie
 - [x] Allow the user to add or remove a genre on the Edit page
 - [ ] Implement a search function to search for movies in the collection
-- [ ] Develop an Admin page for adding and removing genres from the database
+- [x] Develop an Admin page for adding and removing genres from the database
 - [ ] Deploy to Heroku
 
 ### Prerequisites
@@ -44,7 +44,8 @@ How does someone use this application? Tell a user story here.
 5. Click on a movie's poster to navigate to the Details page for that movie.
 6. Click `Edit` to edit the movie's title, description, and/or genres.
 7. Click `Save` to update the database entry, or `Cancel` to discard and return to Details.
-8. Click `Movie List` at anytime to return Home.
+8. Click `Admin Login` to view the Admin page (username: `camera`, password: `action`).
+9. On the Admin page, new genres may be added and removed.
 
 ## Built With
 
