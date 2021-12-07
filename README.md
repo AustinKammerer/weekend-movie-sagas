@@ -22,6 +22,14 @@ TODO
 - [x] Develop an Admin page for adding and removing genres from the database
 - [x] Deploy to Heroku
 
+## Screenshots
+
+![screenshots/screen1.png](screenshots/screen1.png)
+![screenshots/screen2.png](screenshots/screen2.png)
+![screenshots/screen3.png](screenshots/screen3.png)
+![screenshots/screen4.png](screenshots/screen4.png)
+![screenshots/screen5.png](screenshots/screen5.png)
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
